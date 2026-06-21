@@ -1,0 +1,13 @@
+[Unit]
+Description=Télécharger la dernière facture FDN
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=__APP__
+Group=__APP__
+ExecStart=/usr/local/bin/facture-fdn.sh
+StandardOutput=journal
+StandardError=journal
+EnvironmentFile=__INSTALL_DIR__/facture-fdn.env

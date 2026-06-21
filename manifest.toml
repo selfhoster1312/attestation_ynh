@@ -1,0 +1,45 @@
+packaging_format = 2
+id = "attestation"
+name = "Attestation"
+description.en = "A simple app to generate PDF housing certificates"
+description.fr = "Une app simple pour générer des attestations d'hébergement en PDF"
+
+version = "0.1~ynh1"
+
+maintainers = ["selfhoster1312"]
+
+[upstream]
+license = "GPL-3.0-only"
+
+[integration]
+yunohost = ">= 11.1"
+architectures = "all"
+multi_instance = false
+ldap = true
+sso = true
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/site"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = "nginx php8.4-fpm"  # Kind of "dummy" value to be sure to have a non-empty dep list

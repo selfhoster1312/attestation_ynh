@@ -1,0 +1,13 @@
+[Unit]
+Description=Télécharger la dernière facture FDN tous les jours à 2h du matin
+Requires=attestation-facture-fdn.service
+
+[Timer]
+OnCalendar=daily
+OnCalendar=*-*-* 02:00:00
+Persistent=true
+Unit=attestation-facture-fdn.service
+
+[Install]
+WantedBy=timers.target
+

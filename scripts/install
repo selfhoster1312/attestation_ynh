@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# RETRIEVE ARGUMENTS FROM THE MANIFEST
+#=================================================
+
+# TODO: prevent visitors (public access)
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Configuring NGINX web server..." --weight=2
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
+#=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..."
+
+ynh_system_user_create --username=$app --home_dir="$install_dir"
+
+#=================================================
+# SPECIFIC SETUP
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+cp -a ../www "$install_dir/www"
+
+cp ../conf/config.php "$install_dir/config.php"
+
+cp ../helpers/facture-fdn.sh /usr/local/bin/facture-fdn.sh
+ynh_add_config --template="facture-fdn.env" --destination="$install_dir/facture-fdn.env"
+ynh_add_config --template="attestation-facture-fdn.service" --destination="/etc/systemd/system/attestation-facture-fdn.service"
+cp ../helpers/attestation-facture-fdn.timer /etc/systemd/system/
+systemctl daemon-reload
+
+chown -R $app:www-data "$install_dir"
+chmod 750 "$install_dir"
+
+#=================================================
+# PHP-FPM CONFIGURATION
+#=================================================
+
+ynh_add_fpm_config
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression --message="Installation of $app completed" --last
+
