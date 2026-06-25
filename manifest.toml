@@ -4,7 +4,7 @@ name = "Attestation"
 description.en = "A simple app to generate PDF housing certificates"
 description.fr = "Une app simple pour générer des attestations d'hébergement en PDF"
 
-version = "0.1~ynh1"
+version = "1.0~ynh1"
 
 maintainers = ["selfhoster1312"]
 

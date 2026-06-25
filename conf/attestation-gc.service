@@ -1,0 +1,12 @@
+[Unit]
+Description=Supprimer les anciennes attestations d'hébergement
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=__APP__
+Group=__APP__
+ExecStart=/usr/bin/find __INSTALL_DIR__/www/output -mtime +7 -type f -delete
+StandardOutput=journal
+StandardError=journal

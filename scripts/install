@@ -42,7 +42,9 @@ cp ../conf/config.php "$install_dir/config.php"
 cp ../helpers/facture-fdn.sh /usr/local/bin/facture-fdn.sh
 ynh_add_config --template="facture-fdn.env" --destination="$install_dir/facture-fdn.env"
 ynh_add_config --template="attestation-facture-fdn.service" --destination="/etc/systemd/system/attestation-facture-fdn.service"
+ynh_add_config --template="attestation-gc.service" --destination="/etc/systemd/system/attestation-gc.service"
 cp ../helpers/attestation-facture-fdn.timer /etc/systemd/system/
+cp ../helpers/attestation-gc.timer /etc/systemd/system/
 systemctl daemon-reload
 
 chown -R $app:www-data "$install_dir"
